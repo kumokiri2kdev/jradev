@@ -15,6 +15,7 @@ class parser_top(pr.parser):
 				for link in links:
 					anchor = link.find("a")
 					if anchor.has_attr('onclick'):
+					#if 'onclick' in anchor:
 						#print(anchor['onclick'])
 						params = pr.func_parser.parse(anchor['onclick'])
 						print(params)
