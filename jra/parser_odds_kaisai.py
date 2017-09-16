@@ -4,8 +4,6 @@ from . import parser_post as prp
 
 class parser_odds_kaisai(prp.parser_post):
     def parse_content(self, soup):
-        print("odds kaisai start parsing")
-        #print(soup)
         races = soup.find_all("td", attrs = {"class":"raceNo"})
 
         race_list = [{} for i in range(len(races))]

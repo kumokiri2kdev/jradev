@@ -23,15 +23,13 @@ class parser_odds_win(prp.parser_post):
         return data
 
     def parse_content(self, soup):
-        print("odds win start parsing")
-
         umas = soup.find_all("th", attrs = {"class":"umaban"})
 
         uma_list = [{}] * len(umas)
 
         for i, uma in enumerate(umas) :
             #print(uma.parent)
-            print("Uma ban : {}".format(uma.get_text()))
+            #print("Uma ban : {}".format(uma.get_text()))
             tds = uma.parent.find_all('td')
             uma_data = {}
             uma_list[i] = uma_data
@@ -89,6 +87,7 @@ class parser_odds_win(prp.parser_post):
                         uma_data['stable'] = self.get_name_params(td)
                         pass
                     else:
-                        print(class_name)
+                        pass
+                        #print(class_name)
 
         return uma_list

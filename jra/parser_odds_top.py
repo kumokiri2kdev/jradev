@@ -4,7 +4,6 @@ import re
 
 class parser_odds_top(prp.parser_post):
     def parse_content(self, soup):
-        print("odds top start parsing")
         areas = soup.find_all("div", attrs = {"class":"joSelectArea"})
 
         kaisai_list = []

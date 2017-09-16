@@ -2,11 +2,9 @@ from . import parser as pr
 
 class parser_top(pr.parser):
 	def __init__(self):
-		print("parser_top")
 		super(parser_top,self).__init__('/')
 		
 	def parse_content(self, soup):
-		print("start parsing")
 		param_list = {}
 		qmenu = soup.find("div", attrs={"id": "quick_menu"})
 		if qmenu:

@@ -13,8 +13,6 @@ class parser:
 		else:
 			self.method = 'GET'
 
-		print(self.uri)
-
 	def gen_asb_uri(self, file_path):
 		return 'http://www.jra.go.jp{}'.format(file_path)
 		
