@@ -7,12 +7,12 @@ from jra import parser_odds_top as prot
 from jra import parser_odds_kaisai as prok
 from jra import parser_odds_win as prow
 
-use_network = False
+use_network = True
 
-_parser = prok.parser_odds_kaisai('/JRADB/accessO.html', 'pw15orl10062017040120170909/28')
+_parser = prok.parser_odds_kaisai('/JRADB/accessO.html', 'pw15orl00062017040320170916/CE')
 
 if use_network:
-    _parser.parse()
+    list = _parser.parse()
 else:
     args = sys.argv
 

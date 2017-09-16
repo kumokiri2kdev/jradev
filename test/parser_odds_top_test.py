@@ -7,7 +7,7 @@ from jra import parser_odds_top as prot
 from jra import parser_odds_kaisai as prok
 from jra import parser_odds_win as prow
 
-use_network = False
+use_network = True
 
 _parser = prot.parser_odds_top('/JRADB/accessO.html', 'pw15oli00/6D')
 
@@ -24,8 +24,8 @@ else:
         response_body = rfp.read().decode("'shift_jis'")
         kaisai_list = _parser.parse_html(response_body)
 
-    for date in kaisai_list:
-        print("日付: {}".format(date['date']))
-        for kaisai in date['kaisai_list']:
-            print(" 開催 : {}".format(kaisai['kaisai']))
-            print(" Param : {}".format(kaisai['param']))
+for date in kaisai_list:
+    print("日付: {}".format(date['date']))
+    for kaisai in date['kaisai_list']:
+        print(" 開催 : {}".format(kaisai['kaisai']))
+        print(" Param : {}".format(kaisai['param']))

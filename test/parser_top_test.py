@@ -4,7 +4,7 @@ sys.path.append('../')
 
 from jra import parser_top as pr
 
-use_network = False
+use_network = True
 
 _parser = pr.parser_top()
 
