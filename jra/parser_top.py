@@ -1,4 +1,4 @@
-import parser as pr
+from . import parser as pr
 
 class parser_top(pr.parser):
 	def __init__(self):
@@ -7,6 +7,7 @@ class parser_top(pr.parser):
 		
 	def parse_content(self, soup):
 		print("start parsing")
+		param_list = {}
 		qmenu = soup.find("div", attrs={"id": "quick_menu"})
 		if qmenu:
 			content = qmenu.find("div", attrs = {"class":"content"})
@@ -15,10 +16,25 @@ class parser_top(pr.parser):
 				for link in links:
 					anchor = link.find("a")
 					if anchor.has_attr('onclick'):
-					#if 'onclick' in anchor:
-						#print(anchor['onclick'])
-						params = pr.func_parser.parse(anchor['onclick'])
-						print(params)
-					
+						params = pr.func_parser.parse_func_params(anchor['onclick'])
+						#print(params)
+						if params[0].endswith('accessI.html'):
+							#print("開催情報 : {}".format(params[1]))
+							param_list['kaisai'] = params[1]
+						elif params[0].endswith('accessD.html'):
+							#print("出馬表 : {}".format(params[1]))
+							param_list['shutuba'] = params[1]
+						elif params[0].endswith('accessO.html'):
+							#print("オッズ : {}".format(params[1]))
+							param_list['odds'] = params[1]
+						elif params[0].endswith('accessH.html'):
+							#print("払い戻し : {}".format(params[1]))
+							param_list['haraimodoshi'] = params[1]
+						elif params[0].endswith('accessS.html'):
+							#print("レース結果 : {}".format(params[1]))
+							param_list['race'] = params[1]
+						elif params[0].endswith('accessT.html'):
+							#print("特別レース登録馬 : {}".format(params[1]))
+							param_list['tokubetu'] = params[1]
 		
-		
+		return param_list

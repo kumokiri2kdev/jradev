@@ -1,8 +1,8 @@
 from bs4 import BeautifulSoup
-import parser_util as pu
+from . import parser_util as pu
 import urllib.request
 
-func_parser = pu.func_param_parser()
+func_parser = pu.parser_util()
 
 class parser:
 	def __init__(self, file_path, **kwargs):
@@ -20,7 +20,7 @@ class parser:
 		
 	def parse_html(self, content):
 		soup = BeautifulSoup(content,"html.parser")
-		self.parse_content(soup)
+		return self.parse_content(soup)
 
 	def parse(self):
 		if self.method == 'POST':
@@ -31,7 +31,7 @@ class parser:
 		with urllib.request.urlopen(request) as response:
 			response_body = response.read().decode("'shift_jis'")
 		
-		self.parse_html(response_body)
+		return self.parse_html(response_body)
 
 		
 	def parse_content(self, soup):
