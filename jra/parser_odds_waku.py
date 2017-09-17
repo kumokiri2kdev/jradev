@@ -24,6 +24,17 @@ class parser_odds_waku(prp.parser_post):
 
         return list
 
+    def parse_odds(self, matrix, tr):
+        td = tr.find('td')
+        odds = td.get_text()
+        if odds != '':
+            try :
+                matrix['odds'] = pr.func_parser.get_float(odds)
+            except:
+                if odds == '取消':
+                    pass
+
+
     def parse_content(self, soup):
         odds = soup.find("table", attrs = {'class' : self.table_tag1})
 
@@ -42,17 +53,10 @@ class parser_odds_waku(prp.parser_post):
             for i, tr in enumerate(trs) :
                 matrix = entry['matrix'][i]
                 th = tr.find('th')
-                td = tr.find('td')
-                #print(" {} : {}".format(th.get_text(), td.get_text()))
-                odds = td.get_text()
                 matrix[self.json_tag] = pr.func_parser.get_number(th.get_text())
-                if odds != '':
-                    try :
-                        matrix['odds'] = pr.func_parser.get_float(odds)
-                    except:
-                        if odds == '取消':
-                            pass
-        
+
+                self.parse_odds(matrix, tr)
+
         odds_list = self.sort_list(odds_list, self.json_tag)
 
         return odds_list
