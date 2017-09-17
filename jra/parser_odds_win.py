@@ -5,7 +5,7 @@ from . import parser_post as prp
 class parser_odds_win(prp.parser_post):
     def parse_param(self, element):
         anchor = element.find("a")
-        if anchor.has_attr('onclick'):
+        if anchor and anchor.has_attr('onclick'):
             params = pr.func_parser.parse_func_params(anchor['onclick'])
         else:
             return None
@@ -48,21 +48,21 @@ class parser_odds_win(prp.parser_post):
                             win = pr.func_parser.get_float(td.get_text())
                             uma_data['odds']['win'] = win
                         except:
-                            psss
+                            uma_data['odds']['win'] = pr.func_parser.trim_clean(td.get_text())
                     elif 'fukuMin' in class_name:
                         #print("複勝（最低） : {}".format(td.get_text()))
                         try :
                             fuku_min = pr.func_parser.get_float(td.get_text())
                             uma_data['odds']['fuku_min'] = fuku_min
                         except:
-                            pass
+                            uma_data['odds']['fuku_min'] = pr.func_parser.trim_clean(td.get_text())
                     elif 'fukuMax' in class_name:
                         #print("複勝（最高） : {}".format(td.get_text()))
                         try :
                             fuku_max = pr.func_parser.get_float(td.get_text())
                             uma_data['odds']['fuku_max'] = fuku_max
                         except:
-                            pass
+                            uma_data['odds']['fuku_max'] = pr.func_parser.trim_clean(td.get_text())
                     elif 'seirei' in class_name:
                         #print("性齢 : {}".format(td.get_text()))
                         uma_data['sexage'] = td.get_text()
@@ -85,7 +85,10 @@ class parser_odds_win(prp.parser_post):
                         #print("調教師 : {}".format(td.get_text()))
                         #uma_data['jokey'] = td.get_text()
                         uma_data['stable'] = self.get_name_params(td)
-                        pass
+                    elif 'fuku_irregular' in class_name:
+                        value =  uma_data['odds']['fuku_max'] = pr.func_parser.trim_clean(td.get_text())
+                        uma_data['odds']['fuku_max'] = value
+                        uma_data['odds']['fuku_min'] = value
                     else:
                         pass
                         #print(class_name)
