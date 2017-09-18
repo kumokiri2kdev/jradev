@@ -1,4 +1,5 @@
 from . import parser as pr
+from . import parser_util as pu
 from . import parser_post as prp
 
 
@@ -8,7 +9,7 @@ class parser_odds_trioexacta(prp.parser_post):
         odds = td.get_text()
         if odds != '':
             try :
-                matrix['odds'] = pr.func_parser.get_float(odds)
+                matrix['odds'] = pu.func_parser.get_float(odds)
             except:
                 if odds == '取消':
                     pass
@@ -19,8 +20,8 @@ class parser_odds_trioexacta(prp.parser_post):
             raise ValueError
 
         try :
-            axes1 = pr.func_parser.get_number(axes[0])
-            axes2 = pr.func_parser.get_number(axes[1])   
+            axes1 = pu.func_parser.get_number(axes[0])
+            axes2 = pu.func_parser.get_number(axes[1])   
         except:
             raise         
 
@@ -36,7 +37,7 @@ class parser_odds_trioexacta(prp.parser_post):
         for i, axis in enumerate(axis_list):
             tr = axis.find('tr')
             th = tr.find('th').find_next('th')
-            axis1 = pr.func_parser.get_number(th.get_text())
+            axis1 = pu.func_parser.get_number(th.get_text())
 
             if len(trio_list) == 0 or trio_list[j]['number'] != axis1:
                 trio_axis = {}
@@ -52,7 +53,7 @@ class parser_odds_trioexacta(prp.parser_post):
             odds_tbls = axis.find_all('table', attrs = {'class' : 'oddsTbl'})
 
             for th, odds_tbl  in zip(ths,odds_tbls):
-                axis2 = pr.func_parser.get_number(th.get_text())
+                axis2 = pu.func_parser.get_number(th.get_text())
                 trio_axis2 = {'number':axis2, 'matrix' : []}
                 trio_axis['matrix'].append(trio_axis2)
 
@@ -62,12 +63,12 @@ class parser_odds_trioexacta(prp.parser_post):
                     trix_axis_value = {}
                     try :
                         th = tr.find('th')
-                        pair = pr.func_parser.get_number(th.get_text())
+                        pair = pu.func_parser.get_number(th.get_text())
                     except:
                         continue
                     try :
                         td = tr.find('td')
-                        value = pr.func_parser.get_float(td.get_text())
+                        value = pu.func_parser.get_float(td.get_text())
                     except:
                         value = '発売無し'
 

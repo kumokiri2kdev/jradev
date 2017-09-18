@@ -1,4 +1,5 @@
 from . import parser as pr
+from . import parser_util as pu
 from . import parser_odds_waku as prow
 from . import parser_post as prp
 
@@ -10,7 +11,7 @@ class parser_odds_trio(prow.parser_odds_waku):
         odds = td.get_text()
         if odds != '':
             try :
-                matrix['odds'] = pr.func_parser.get_float(odds)
+                matrix['odds'] = pu.func_parser.get_float(odds)
             except:
                 if odds == '取消':
                     pass
@@ -21,8 +22,8 @@ class parser_odds_trio(prow.parser_odds_waku):
             raise ValueError
 
         try :
-            axes1 = pr.func_parser.get_number(axes[0])
-            axes2 = pr.func_parser.get_number(axes[1])   
+            axes1 = pu.func_parser.get_number(axes[0])
+            axes2 = pu.func_parser.get_number(axes[1])   
         except:
             raise         
 
@@ -60,12 +61,12 @@ class parser_odds_trio(prow.parser_odds_waku):
                 trix_axis_value = {}
                 try :
                     th = tr.find('th')
-                    pair = pr.func_parser.get_number(th.get_text())
+                    pair = pu.func_parser.get_number(th.get_text())
                 except:
                     continue
                 try :
                     td = tr.find('td')
-                    value = pr.func_parser.get_float(td.get_text())
+                    value = pu.func_parser.get_float(td.get_text())
                 except:
                     value = '発売無し'
 

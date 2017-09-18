@@ -1,4 +1,5 @@
 from . import parser as pr
+from . import parser_util as pu
 from . import parser_post as prp
 import re
 
@@ -11,7 +12,7 @@ class parser_odds_top(prp.parser_post):
         for area in areas:
             th = area.find('th')
             if th :
-                date = pr.func_parser.trim_clean(th.get_text())
+                date = pu.func_parser.trim_clean(th.get_text())
                 date = re.sub(r'（.*）',"", date)
                 #print(date)
                 kaisai = {}
@@ -25,9 +26,9 @@ class parser_odds_top(prp.parser_post):
             kaisai['kaisai_list'] = kaisais
             for i, button in enumerate(buttons) :
                 anchor = button.find("a")
-                params = pr.func_parser.parse_func_params(anchor['onclick'])
+                params = pu.func_parser.parse_func_params(anchor['onclick'])
                 #print(params)
-                kaisai_id = pr.func_parser.trim_clean(anchor.get_text())
+                kaisai_id = pu.func_parser.trim_clean(anchor.get_text())
                 #print(kaisai_id)
                 kaisais[i]['kaisai'] = kaisai_id
                 kaisais[i]['param'] = params[1]

@@ -1,4 +1,5 @@
 from . import parser as pr
+from . import parser_util as pu
 from . import parser_post as prp
 
 
@@ -11,7 +12,7 @@ class parser_odds_kaisai(prp.parser_post):
         for i, race in enumerate(races):
             race_data = race_list[i]
             anchor = race.find("a")
-            params = pr.func_parser.parse_func_params(anchor['onclick'])
+            params = pu.func_parser.parse_func_params(anchor['onclick'])
             #print(params)
             race_id = race.find("img")['alt']
             #print(race_id)
@@ -26,7 +27,7 @@ class parser_odds_kaisai(prp.parser_post):
                         category = td.find("img")
                         #print(category['alt'])
                         race_data['no'] = category['alt']
-                        params = pr.func_parser.parse_func_params(anchor['onclick'])
+                        params = pu.func_parser.parse_func_params(anchor['onclick'])
                         #print(params)
                     elif 'raceTitleUpper' in class_name:
                         #print(td.get_text())
@@ -34,7 +35,7 @@ class parser_odds_kaisai(prp.parser_post):
                         prev_class_name = prevtd['class']
                         if 'raceTitleLower' in prev_class_name:
                             #print(prevtd.get_text())
-                            lower_value = pr.func_parser.trim_clean(prevtd.get_text())
+                            lower_value = pu.func_parser.trim_clean(prevtd.get_text())
                             if lower_value == "":
                                 race_data['condition']  = td.get_text()
                             else:
@@ -49,7 +50,7 @@ class parser_odds_kaisai(prp.parser_post):
                     anchor = td.find("a")
                     if anchor:
                         category = td.find("img")['alt']
-                        params = pr.func_parser.parse_func_params(anchor['onclick'])
+                        params = pu.func_parser.parse_func_params(anchor['onclick'])
                         #print(params)
                         #print(category)
                         if category == '単勝複勝':

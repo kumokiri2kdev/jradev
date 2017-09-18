@@ -4,7 +4,7 @@ sys.path.append('../')
 
 from jra import parser_odds_wide as umw
 
-use_network = False
+use_network = True
 
 _parser = umw.parser_odds_wide('/JRADB/accessO.html', 'pw155ouS306201704051220170918Z/DD')
 

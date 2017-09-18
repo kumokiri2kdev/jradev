@@ -4,7 +4,7 @@ sys.path.append('../')
 
 from jra import parser_odds_exacta as ume
 
-use_network = False
+use_network = True
 
 _parser = ume.parser_odds_exacta('/JRADB/accessO.html', 'pw156ouS306201704051220170918Z/61')
 

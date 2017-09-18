@@ -4,7 +4,7 @@ sys.path.append('../')
 
 from jra import parser_odds_trioexacta as trio
 
-use_network = False
+use_network = True
 
 _parser = trio.parser_odds_trioexacta('/JRADB/accessO.html', 'pw158ouS306201704051120170918Z/B4')
 

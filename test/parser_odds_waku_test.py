@@ -4,7 +4,7 @@ sys.path.append('../')
 
 from jra import parser_odds_waku as waku
 
-use_network = False
+use_network = True
 
 _parser = waku.parser_odds_waku('/JRADB/accessO.html', 'pw153ouS306201704051120170918Z/20')
 

@@ -1,4 +1,5 @@
 from . import parser as pr
+from . import parser_util as pu
 from . import parser_odds_waku as prow
 
 
@@ -15,7 +16,7 @@ class parser_odds_wide(prow.parser_odds_waku):
         odds_min = tds[0].get_text()
         if odds_min != '':
             try :
-                matrix['odds_min'] = pr.func_parser.get_float(odds_min)
+                matrix['odds_min'] = pu.func_parser.get_float(odds_min)
             except:
                 if odds == '取消':
                     pass
@@ -23,7 +24,7 @@ class parser_odds_wide(prow.parser_odds_waku):
         odds_max = tds[2].get_text()
         if odds_max != '':
             try :
-                matrix['odds_max'] = pr.func_parser.get_float(odds_max)
+                matrix['odds_max'] =pu.func_parser.get_float(odds_max)
             except:
                 if odds == '取消':
                     pass

@@ -2,8 +2,6 @@ from bs4 import BeautifulSoup
 from . import parser_util as pu
 import urllib.request
 
-func_parser = pu.parser_util()
-
 class parser:
 	def __init__(self, file_path, **kwargs):
 		self.uri = self.gen_asb_uri(file_path)

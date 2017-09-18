@@ -1,4 +1,5 @@
 from . import parser as pr
+from . import parser_util as pu
 from . import parser_post as prp
 
 
@@ -28,7 +29,7 @@ class parser_odds_waku(prp.parser_post):
         odds = td.get_text()
         if odds != '':
             try :
-                matrix['odds'] = pr.func_parser.get_float(odds)
+                matrix['odds'] = pu.func_parser.get_float(odds)
             except:
                 if odds == '取消':
                     pass
@@ -45,14 +46,14 @@ class parser_odds_waku(prp.parser_post):
             entry = odds_list[i]
             tr = odds_table.find('tr')
             th = tr.find('th')
-            entry['number'] = pr.func_parser.get_number(th.get_text())
+            entry['number'] = pu.func_parser.get_number(th.get_text())
 
             trs =  tr.find_next_siblings('tr')
             entry['matrix'] = [{} for i in range(len(trs))]
             for i, tr in enumerate(trs) :
                 matrix = entry['matrix'][i]
                 th = tr.find('th')
-                matrix['number'] = pr.func_parser.get_number(th.get_text())
+                matrix['number'] = pu.func_parser.get_number(th.get_text())
 
                 self.parse_odds(matrix, tr)
 

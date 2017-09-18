@@ -1,4 +1,5 @@
 from . import parser as pr
+from . import parser_util as pu
 
 class parser_top(pr.parser):
 	def __init__(self):
@@ -14,7 +15,7 @@ class parser_top(pr.parser):
 				for link in links:
 					anchor = link.find("a")
 					if anchor.has_attr('onclick'):
-						params = pr.func_parser.parse_func_params(anchor['onclick'])
+						params = pu.func_parser.parse_func_params(anchor['onclick'])
 						#print(params)
 						if params[0].endswith('accessI.html'):
 							#print("開催情報 : {}".format(params[1]))

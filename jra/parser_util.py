@@ -90,3 +90,4 @@ def parser_util_convert_datestr(date_str):
 
     return(converted)
 
+func_parser = parser_util()
