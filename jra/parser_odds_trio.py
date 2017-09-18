@@ -1,19 +1,9 @@
 from . import parser as pr
+from . import parser_odds_waku as prow
 from . import parser_post as prp
 
 
-class parser_odds_trio(prp.parser_post):
-    def sort_list(self, list, key):
-        for i in range(0, len(list)):
-            j = len(list) - 1
-            while j > i:
-                if list[j][key] < list[j-1][key]:
-                    tmp = list[j-1]
-                    list[j-1] = list[j]
-                    list[j] = tmp
-                j = j - 1
-
-        return list
+class parser_odds_trio(prow.parser_odds_waku):
 
     def parse_odds(self, matrix, tr):
         td = tr.find('td')
@@ -63,7 +53,7 @@ class parser_odds_trio(prp.parser_post):
                     j = j + 1
 
             trio_axis2 = {'number':axis2, 'matrix' : []}
-            trio_axis['matrix'].append(trio_axis2 )
+            #trio_axis['matrix'].append(trio_axis2 )
             trs = tr.find_next_siblings('tr')
 
             for k, tr in enumerate(trs):
@@ -80,6 +70,12 @@ class parser_odds_trio(prp.parser_post):
                     value = '発売無し'
 
                 trio_axis2['matrix'].append({'number': pair, 'odds': value}) 
+
+            trio_axis2['matrix'] = self.sort_list(trio_axis2['matrix'], 'number')
+            trio_axis['matrix'].append(trio_axis2)
+            
+        for list in trio_list:
+            list['matrix'] = self.sort_list(list['matrix'], 'number')
 
         return trio_list
 
