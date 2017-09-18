@@ -9,8 +9,7 @@ class parser_odds_waku(prp.parser_post):
 
     def configure(self):
         self.table_tag1 = 'ozWakuOutTable'
-        self.table_tag2 = 'ozWakuINTable' 
-        self.json_tag = 'waku'       
+        self.table_tag2 = 'ozWakuINTable'   
 
     def sort_list(self, list, key):
         for i in range(0, len(list)):
@@ -46,18 +45,18 @@ class parser_odds_waku(prp.parser_post):
             entry = odds_list[i]
             tr = odds_table.find('tr')
             th = tr.find('th')
-            entry[self.json_tag] = pr.func_parser.get_number(th.get_text())
+            entry['number'] = pr.func_parser.get_number(th.get_text())
 
             trs =  tr.find_next_siblings('tr')
             entry['matrix'] = [{} for i in range(len(trs))]
             for i, tr in enumerate(trs) :
                 matrix = entry['matrix'][i]
                 th = tr.find('th')
-                matrix[self.json_tag] = pr.func_parser.get_number(th.get_text())
+                matrix['number'] = pr.func_parser.get_number(th.get_text())
 
                 self.parse_odds(matrix, tr)
 
-        odds_list = self.sort_list(odds_list, self.json_tag)
+        odds_list = self.sort_list(odds_list, 'number')
 
         return odds_list
 

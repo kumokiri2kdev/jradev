@@ -30,12 +30,12 @@ for kaisai in kaisai_list:
                 parser_waku = prow.parser_odds_waku('/JRADB/accessO.html', race['waku'])
                 waku_list =  parser_waku.parse()
                 for waku in waku_list:
-                    print("枠番 : {}".format(waku['waku']))
+                    print("枠番 : {}".format(waku['number']))
                     for matrix in waku['matrix']:
                         if 'odds' in matrix:
-                            print(" - {} : {}".format(matrix['waku'], matrix['odds']))
+                            print(" - {} : {}".format(matrix['number'], matrix['odds']))
                         else:
-                            print(" - {} : 発売なし".format(matrix['waku']))
+                            print(" - {} : 発売なし".format(matrix['number']))
             else :
                 print("枠連発売なし")
         

@@ -22,9 +22,9 @@ else:
         waku_list = _parser.parse_html(response_body)
 
 for waku in waku_list:
-    print("枠番 : {}".format(waku['waku']))
+    print("枠番 : {}".format(waku['number']))
     for matrix in waku['matrix']:
         if 'odds' in matrix:
-            print(" - {} : {}".format(matrix['waku'], matrix['odds']))
+            print(" - {} : {}".format(matrix['number'], matrix['odds']))
         else:
-            print(" - {} : 発売なし".format(matrix['waku']))
+            print(" - {} : 発売なし".format(matrix['number']))

@@ -22,9 +22,9 @@ else:
         uma_list = _parser.parse_html(response_body)
 
 for uma in uma_list:
-    print("馬番 : {}".format(uma['uma']))
+    print("馬番 : {}".format(uma['number']))
     for matrix in uma['matrix']:
         if 'odds' in matrix:
-            print(" - {} : {}".format(matrix['uma'], matrix['odds']))
+            print(" - {} : {}".format(matrix['number'], matrix['odds']))
         else:
-            print(" - {} : 発売なし".format(matrix['uma']))
+            print(" - {} : 発売なし".format(matrix['number']))

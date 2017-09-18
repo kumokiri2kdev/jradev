@@ -30,12 +30,12 @@ for kaisai in kaisai_list:
                 parser_uma = umw.parser_odds_wide('/JRADB/accessO.html', race['wide'])
                 uma_list =  parser_uma.parse()
                 for uma in uma_list:
-                    print("馬番 : {}".format(uma['wide']))
+                    print("馬番 : {}".format(uma['number']))
                     for matrix in uma['matrix']:
                         if 'odds_min' in matrix:
-                            print(" - {} : {} - {}".format(matrix['wide'], matrix['odds_min'], matrix['odds_max']))
+                            print(" - {} : {} - {}".format(matrix['number'], matrix['odds_min'], matrix['odds_max']))
                         else:
-                            print(" - {} : 発売なし".format(matrix['wide']))
+                            print(" - {} : 発売なし".format(matrix['number']))
             else :
                 print("ワイド発売なし")
         

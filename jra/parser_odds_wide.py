@@ -6,7 +6,6 @@ class parser_odds_wide(prow.parser_odds_waku):
     def configure(self):
         self.table_tag1 = 'ozWideUmaOutTable'
         self.table_tag2 = 'ozWideUmaINTable' 
-        self.json_tag = 'wide'
 
     def parse_odds(self, matrix, tr):
         tds = tr.find_all('td')
