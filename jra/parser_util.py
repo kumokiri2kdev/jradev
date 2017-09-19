@@ -1,6 +1,7 @@
 import re
 from datetime import datetime
 import boto3
+import json
 
 BACKET_NAME = 'jradatabucket'
 
@@ -74,7 +75,10 @@ class parser_util:
 			bucket.put_object(Key=folder_name)
 		else:
 			pass
-
+	
+	def s3_put_data(self, key, data):
+		wobj = self.s3.Object(BACKET_NAME, key)
+		wobj.put(Body = json.dumps(data, ensure_ascii=False,))
 
 def parser_util_convert_datestr(date_str):
     try:
