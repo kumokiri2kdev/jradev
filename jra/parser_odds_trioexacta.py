@@ -1,9 +1,9 @@
 from . import parser as pr
 from . import parser_util as pu
-from . import parser_post as prp
+from . import parser_odds as pro
 
 
-class parser_odds_trioexacta(prp.parser_post):
+class parser_odds_trioexacta(pro.parser_odds):
     def parse_odds(self, matrix, tr):
         td = tr.find('td')
         odds = td.get_text()
@@ -14,7 +14,7 @@ class parser_odds_trioexacta(prp.parser_post):
                 if odds == '取消':
                     pass
 
-    def split_axis(self, axis):
+    def parse_odds_content(self, axis):
         axes = axis.split('-')
         if len(axes) < 2:
             raise ValueError

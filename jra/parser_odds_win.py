@@ -1,9 +1,9 @@
 from . import parser as pr
 from . import parser_util as pu
-from . import parser_post as prp
+from . import parser_odds as pro
 
 
-class parser_odds_win(prp.parser_post):
+class parser_odds_win(pro.parser_odds):
     def parse_param(self, element):
         anchor = element.find("a")
         if anchor and anchor.has_attr('onclick'):
@@ -23,7 +23,7 @@ class parser_odds_win(prp.parser_post):
 
         return data
 
-    def parse_content(self, soup):
+    def parse_odds_content(self, soup):
         umas = soup.find_all("th", attrs = {"class":"umaban"})
 
         uma_list = [{} for i in range(len(umas))] 

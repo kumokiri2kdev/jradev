@@ -30,7 +30,7 @@ class parser_odds_trio(prow.parser_odds_waku):
         return axes1, axes2
 
 
-    def parse_content(self, soup):
+    def parse_odds_content(self, soup):
         axis_list = soup.find_all("table", attrs = {'class' : 'ozSanrenUmaINTable'})
 
         trio_list = []

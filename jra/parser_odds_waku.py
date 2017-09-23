@@ -1,9 +1,9 @@
 from . import parser as pr
 from . import parser_util as pu
-from . import parser_post as prp
+from . import parser_odds as pro
 
 
-class parser_odds_waku(prp.parser_post):
+class parser_odds_waku(pro.parser_odds):
     def __init__(self, path, param):
         super(parser_odds_waku, self).__init__(path, param)
         self.configure()
@@ -35,7 +35,7 @@ class parser_odds_waku(prp.parser_post):
                     pass
 
 
-    def parse_content(self, soup):
+    def parse_odds_content(self, soup):
         odds = soup.find("table", attrs = {'class' : self.table_tag1})
 
         odds_tables = odds.find_all("table", attrs = {'class' : self.table_tag2})

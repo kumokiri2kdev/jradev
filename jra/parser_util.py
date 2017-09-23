@@ -13,6 +13,8 @@ class parser_util:
 	def __init__(self):
 		self.func_patern = re.compile(r'\(.*\)')
 		self.split_pattern = re.compile(r'[\(\)\']')
+		self.time_pattern = re.compile(r'[0-9]{2}:[0-9]{2}')
+
 		self.s3_client = boto3.client('s3')	
 		self.s3 = boto3.resource('s3')
 		
@@ -47,6 +49,15 @@ class parser_util:
 			raise ValueError
 
 		return weight, diff
+
+	def parse_time(self, str):
+		try:
+			searched = re.search(self.time_pattern, str)
+			time = re.sub(r'[\(\)]', '', searched[0])
+		except:
+			raise ValueError
+
+		return searched[0]
 
 	def get_number(self, str):
 		try:
@@ -93,5 +104,15 @@ def parser_util_convert_datestr(date_str):
         raise ValueError
 
     return(converted)
+
+def parser_util_convert_timestr_full_and_stamp(time_str):
+	try:
+		today = datetime.now()
+		converted = '{}/{}/{} {}'.format(today.year, today.month, today.day, time_str)
+		stamp = datetime.strptime(converted, '%Y/%m/%d %H:%M')
+	except:
+		raise ValueError
+
+	return(converted, stamp)
 
 func_parser = parser_util()
