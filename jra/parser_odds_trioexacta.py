@@ -28,7 +28,7 @@ class parser_odds_trioexacta(pro.parser_odds):
         return axes1, axes2
 
 
-    def parse_content(self, soup):
+    def parse_odds_content(self, soup):
         axis_list = soup.find_all("table", attrs = {'class' : 'santanOddsHyo'})
 
         trio_list = []

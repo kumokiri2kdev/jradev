@@ -28,7 +28,13 @@ for kaisai in kaisai_list:
             print("  -- {} {}".format(race['no'], race['condition']))
             if 'waku' in race:
                 parser_waku = prow.parser_odds_waku('/JRADB/accessO.html', race['waku'])
-                waku_list =  parser_waku.parse()
+                odds_info =  parser_waku.parse()
+                if odds_info['fixed'] == True:
+                    print("最終オッズ")
+                else:
+                    print("{} 現在のオッズ()".format(odds_info['timestamp'] ))
+
+                waku_list =  odds_info['odds']
                 for waku in waku_list:
                     print("枠番 : {}".format(waku['number']))
                     for matrix in waku['matrix']:

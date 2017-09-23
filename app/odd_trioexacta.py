@@ -28,7 +28,13 @@ for kaisai in kaisai_list:
             print("  -- {} {}".format(race['no'], race['condition']))
             if 'trio' in race:
                 parser_trio = protx.parser_odds_trioexacta('/JRADB/accessO.html', race['trioexacta'])
-                trio_list =  parser_trio.parse()
+                odds_info =  parser_trio.parse()
+                if odds_info['fixed'] == True:
+                    print("最終オッズ")
+                else:
+                    print("{} 現在のオッズ()".format(odds_info['timestamp'] ))
+
+                trio_list =  odds_info['odds']
                 for trio in trio_list:
                     print("馬番 : {}".format(trio['number']))
                     for matrix in trio['matrix']:

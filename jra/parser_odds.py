@@ -22,11 +22,17 @@ class parser_odds(prp.parser_post):
                                 print("ValueError : {}".format(value))
                                 pass
                         else:
-                            print("最終オッズ")
+                            print(">> 最終オッズ")
                     else:
-                        print("最終オッズ")
-        
-        if fixed == False:
-            print("{} 現在のオッズ({})".format(time_value, full))            
+                        print(">>> 最終オッズ")
 
-        return self.parse_odds_content(soup)
+        odds_info = {}
+        odds_info['fixed'] = fixed
+        if fixed == False:
+            odds_info['timestamp'] = stamp
+            #print("{} 現在のオッズ({})".format(time_value, full))            
+
+        odds_list = self.parse_odds_content(soup)
+        odds_info['odds'] = odds_list
+
+        return odds_info

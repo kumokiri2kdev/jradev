@@ -6,10 +6,10 @@ from jra import parser_odds_trio as trio
 
 use_network = True
 
-_parser = trio.parser_odds_trio('/JRADB/accessO.html', 'pw157ouS306201704051120170918Z99/92')
+_parser = trio.parser_odds_trio('/JRADB/accessO.html', 'pw157ouS309201704071120170924Z99/BC')
 
 if use_network:
-   trio_list =  _parser.parse()
+   odds_info =  _parser.parse()
 else:
     args = sys.argv
 
@@ -19,7 +19,9 @@ else:
 
     with open(args[1],'rb') as rfp:
         response_body = rfp.read().decode("'shift_jis'")
-        trio_list = _parser.parse_html(response_body)
+        odds_info = _parser.parse_html(response_body)
+
+trio_list =  odds_info['odds']
 
 for trio in trio_list:
     print("馬番 : {}".format(trio['number']))

@@ -109,7 +109,7 @@ def parser_util_convert_timestr_full_and_stamp(time_str):
 	try:
 		today = datetime.now()
 		converted = '{}/{}/{} {}'.format(today.year, today.month, today.day, time_str)
-		stamp = datetime.strptime(converted, '%Y/%m/%d %H:%M')
+		stamp = datetime.strptime(converted, '%Y/%m/%d %H:%M').timestamp()
 	except:
 		raise ValueError
 

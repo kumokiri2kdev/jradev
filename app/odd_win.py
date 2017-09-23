@@ -27,7 +27,13 @@ for kaisai in kaisai_list:
         for race in race_list:
             print("  -- {} {}".format(race['no'], race['condition']))
             parser_win = prow.parser_odds_win('/JRADB/accessO.html', race['win'])
-            uma_list =  parser_win.parse()
+            odds_info = parser_win.parse()
+            if odds_info['fixed'] == True:
+                print("最終オッズ")
+            else:
+                print("{} 現在のオッズ()".format(odds_info['timestamp'] ))
+
+            uma_list =  odds_info['odds']
             for uma_data in uma_list:
                 print("   [{}]{} {} {} ({} - {})".format(uma_data['number'], uma_data['uma']['name'], 
                                                                     uma_data['sexage'], uma_data['odds']['win'],

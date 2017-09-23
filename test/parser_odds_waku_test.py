@@ -6,10 +6,10 @@ from jra import parser_odds_waku as waku
 
 use_network = True
 
-_parser = waku.parser_odds_waku('/JRADB/accessO.html', 'pw153ouS306201704051120170918Z/20')
+_parser = waku.parser_odds_waku('/JRADB/accessO.html', 'pw153ouS309201704071120170924Z/4A')
 
 if use_network:
-   waku_list =  _parser.parse()
+   odds_info =  _parser.parse()
 else:
     args = sys.argv
 
@@ -19,7 +19,9 @@ else:
 
     with open(args[1],'rb') as rfp:
         response_body = rfp.read().decode("'shift_jis'")
-        waku_list = _parser.parse_html(response_body)
+        odds_info = _parser.parse_html(response_body)
+
+waku_list =  odds_info['odds']
 
 for waku in waku_list:
     print("枠番 : {}".format(waku['number']))

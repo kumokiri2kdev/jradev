@@ -28,7 +28,13 @@ for kaisai in kaisai_list:
             print("  -- {} {}".format(race['no'], race['condition']))
             if 'wide' in race:
                 parser_uma = umw.parser_odds_wide('/JRADB/accessO.html', race['wide'])
-                uma_list =  parser_uma.parse()
+                odds_info =  parser_uma.parse()
+                if odds_info['fixed'] == True:
+                    print("最終オッズ")
+                else:
+                    print("{} 現在のオッズ()".format(odds_info['timestamp'] ))
+
+                uma_list =  odds_info['odds']
                 for uma in uma_list:
                     print("馬番 : {}".format(uma['number']))
                     for matrix in uma['matrix']:
