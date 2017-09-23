@@ -24,9 +24,19 @@ class parser_odds_kaisai(prp.parser_post):
                     class_name = td['class']
                     #print(class_name)
                     if 'raceNo' in class_name:
-                        category = td.find("img")
-                        #print(category['alt'])
-                        race_data['no'] = category['alt']
+                        categories = td.find_all("img")
+                        for category in categories:
+                            if 'class' in category:
+                                class_name = category['class']
+                            if class_name and 'win5BtnRace' in class_name:
+                                pass
+                            else:
+                                try :
+                                    race_number = int(category['alt'].replace('R',''))
+                                except:
+                                    race_number = 0
+                                race_data['no'] = race_number
+                        
                         params = pu.func_parser.parse_func_params(anchor['onclick'])
                         #print(params)
                     elif 'raceTitleUpper' in class_name:
