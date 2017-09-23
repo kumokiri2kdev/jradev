@@ -2,8 +2,14 @@ from bs4 import BeautifulSoup
 from . import parser_util as pu
 import urllib.request
 
+DEBUG = True
+
 class parser:
 	def __init__(self, file_path, **kwargs):
+		if DEBUG:
+			self.base_uri = 'http://127.0.0.1:8080'
+		else:
+			self.base_uri = 'http://www.jra.go.jp'
 		self.uri = self.gen_asb_uri(file_path)
 		if 'data' in kwargs:
 			self.method = 'POST'
@@ -12,7 +18,7 @@ class parser:
 			self.method = 'GET'
 
 	def gen_asb_uri(self, file_path):
-		return 'http://www.jra.go.jp{}'.format(file_path)
+		return '{}{}'.format(self.base_uri, file_path)
 		
 	def parse_html(self, content):
 		soup = BeautifulSoup(content,"html.parser")
