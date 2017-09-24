@@ -1,8 +1,12 @@
 from bs4 import BeautifulSoup
 from . import parser_util as pu
 import urllib.request
+import os
 
-DEBUG = True
+if os.getenv('JRA_PRS_DEBUG', '0') == '1':
+	DEBUG = True
+else:
+	DEBUG = False
 
 class parser:
 	def __init__(self, file_path, **kwargs):
