@@ -2,6 +2,7 @@ import re
 from datetime import datetime
 import boto3
 import json
+import os
 
 BACKET_NAME = 'jradatabucket'
 
@@ -14,6 +15,8 @@ class parser_util:
 		self.func_patern = re.compile(r'\(.*\)')
 		self.split_pattern = re.compile(r'[\(\)\']')
 		self.time_pattern = re.compile(r'[0-9]{2}:[0-9]{2}')
+		self.kaisuu_pattern = re.compile(r'[0-9]回')
+		self.nichisuu_pattern = re.compile(r'[0-9]日')
 
 		self.s3_client = boto3.client('s3')	
 		self.s3 = boto3.resource('s3')
@@ -59,6 +62,22 @@ class parser_util:
 
 		return searched[0]
 
+	def parse_kaisai(self, str):
+		try :
+			searched = re.search(self.kaisuu_pattern, str)
+			#print(searched[0])
+			kaisuu = int(re.sub(r'回', '', searched[0]))
+			searched = re.search(self.nichisuu_pattern, str)
+			#print(searched[0])
+			nichisuu = int(re.sub(r'日', '', searched[0]))
+			place = re.sub(self.kaisuu_pattern, '', str)
+			place = re.sub(self.nichisuu_pattern, '', place)
+			#print(place)
+		except:
+			raise ValueError
+
+		return kaisuu, nichisuu,place
+
 	def get_number(self, str):
 		try:
 			return int(self.trim_clean(str))
@@ -70,6 +89,20 @@ class parser_util:
 			return float(self.trim_clean(str))
 		except:
 			raise
+
+	def local_folder_check(self, root, date, place, no, category):
+		elements = [root, date, place, str(no), category]
+		path = './'
+
+		for element in elements:
+			path = path + '/' + element
+			if os.path.isdir(path) == False:
+				os.mkdir(path)
+
+	def does_final_odds_exist(self, root, date, place, no, category):
+		path = '{}/{}/{}/{}/{}/9999999999.9.json'.format(root, date, place,no,category)
+		
+		return os.path.isfile(path)
 
 	def s3_folder_check(self, key):
 		response = self.s3_client.list_objects(Bucket= BACKET_NAME)

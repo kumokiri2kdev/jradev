@@ -29,8 +29,14 @@ class parser_odds_top(prp.parser_post):
                 params = pu.func_parser.parse_func_params(anchor['onclick'])
                 #print(params)
                 kaisai_id = pu.func_parser.trim_clean(anchor.get_text())
-                #print(kaisai_id)
-                kaisais[i]['kaisai'] = kaisai_id
+                print(kaisai_id)
+                try:
+                    kaisuu, nichisuu, place = pu.func_parser.parse_kaisai(kaisai_id)
+                    kaisais[i]['kaisai'] = place
+                    kaisais[i]['kaisuu'] = kaisuu
+                    kaisais[i]['nichisuu'] = nichisuu
+                except:
+                    pass
                 kaisais[i]['param'] = params[1]
 
         return kaisai_list

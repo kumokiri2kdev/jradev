@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 from . import parser_util as pu
 import urllib.request
 
-DEBUG = False
+DEBUG = True
 
 class parser:
 	def __init__(self, file_path, **kwargs):
