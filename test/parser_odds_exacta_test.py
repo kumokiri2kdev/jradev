@@ -6,10 +6,10 @@ from jra import parser_odds_exacta as ume
 
 use_network = True
 
-_parser = ume.parser_odds_exacta('/JRADB/accessO.html', 'pw156ouS306201704051220170918Z/61')
+_parser = ume.parser_odds_exacta('/JRADB/accessO.html', 'pw156ouS309201704071120170924Z/D6')
 
 if use_network:
-   uma_list =  _parser.parse()
+    odds_info =  _parser.parse()
 else:
     args = sys.argv
 
@@ -19,7 +19,9 @@ else:
 
     with open(args[1],'rb') as rfp:
         response_body = rfp.read().decode("'shift_jis'")
-        uma_list = _parser.parse_html(response_body)
+        odds_info = _parser.parse_html(response_body)
+
+uma_list =  odds_info['odds']
 
 for uma in uma_list:
     print("馬番 : {}".format(uma['number']))

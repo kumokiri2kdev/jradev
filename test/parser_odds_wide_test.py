@@ -6,10 +6,10 @@ from jra import parser_odds_wide as umw
 
 use_network = True
 
-_parser = umw.parser_odds_wide('/JRADB/accessO.html', 'pw155ouS306201704051220170918Z/DD')
+_parser = umw.parser_odds_wide('/JRADB/accessO.html', 'pw155ouS309201704071120170924Z/52')
 
 if use_network:
-   uma_list =  _parser.parse()
+   odds_info =  _parser.parse()
 else:
     args = sys.argv
 
@@ -19,7 +19,14 @@ else:
 
     with open(args[1],'rb') as rfp:
         response_body = rfp.read().decode("'shift_jis'")
-        uma_list = _parser.parse_html(response_body)
+        odds_info = _parser.parse_html(response_body)
+
+uma_list =  odds_info['odds']
+
+if odds_info['fixed'] == True:
+    print("最終オッズ")
+else:
+    print("{} 現在のオッズ()".format(odds_info['timestamp'] ))
 
 for uma in uma_list:
     print("馬番 : {}".format(uma['number']))
