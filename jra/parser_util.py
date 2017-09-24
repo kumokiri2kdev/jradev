@@ -104,11 +104,12 @@ class parser_util:
 		
 		return os.path.isfile(path)
 
-	def s3_folder_check(self, key):
+	def s3_folder_check(self, root, date, place, no, category):
 		response = self.s3_client.list_objects(Bucket= BACKET_NAME)
 
 		exist = False
-		folder_name = '{}{}'.format(key, '/')
+		#folder_name = '{}{}'.format(key, '/')
+		folder_name = '{}/{}/{}/{}/{}/'.format(root, date, place,no,category)
 		for content in response['Contents']:
 			if content['Key'] == folder_name:
 				exist = True
@@ -120,7 +121,8 @@ class parser_util:
 		else:
 			pass
 	
-	def s3_put_data(self, key, data):
+	def s3_put_data(self, root, date, place, no, category, filename, data):
+		key = '{}/{}/{}/{}/{}/{}.json'.format(root, date, place,no,category, filename)
 		wobj = self.s3.Object(BACKET_NAME, key)
 		wobj.put(Body = json.dumps(data, ensure_ascii=False,))
 
