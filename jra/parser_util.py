@@ -10,6 +10,76 @@ class parse_error(Exception):
 	def __init__(self):
 		pass
 
+class parser_storage:
+	def folder_check(self, root, date, place, no, category):
+		pass
+	
+	def final_odds_exist(self, root, date, place, no, category):
+		return False
+
+	def put_data(self, root, date, place, no, category, filename, data):
+		pass
+
+class s3_parser_storage(parser_storage):
+	def __init__(self):
+			self.s3_client = boto3.client('s3')
+			self.s3 = boto3.resource('s3')
+
+	def folder_check(self, root, date, place, no, category):
+		response = self.s3_client.list_objects(Bucket= BACKET_NAME)
+
+		exist = False
+		folder_name = '{}/{}/{}/{}/{}/'.format(root, date, place,no,category)
+		for content in response['Contents']:
+			if content['Key'] == folder_name:
+				exist = True
+				break
+	
+		if exist == False:
+			bucket = self.s3.Bucket(BACKET_NAME)
+			bucket.put_object(Key=folder_name)
+		else:
+			pass
+
+	def s3_file_check(self, key):
+		response = self.s3_client.list_objects(
+			Bucket= BACKET_NAME,
+			Prefix=key)
+		
+		if 'Contents' in response:
+			return True
+		else :
+			return False
+
+	def final_odds_exist(self, root, date, place, no, category):
+		key = '{}/{}/{}/{}/{}/9999999999.9.json'.format(root, date, place,no,category)
+		return self.s3_file_check(key)
+
+	def put_data(self, root, date, place, no, category, filename, data):
+		key = '{}/{}/{}/{}/{}/{}.json'.format(root, date, place,no,category, filename)
+		wobj = self.s3.Object(BACKET_NAME, key)
+		wobj.put(Body = json.dumps(data, ensure_ascii=False,))
+
+class local_parser_storage(parser_storage):
+	def folder_check(self, root, date, place, no, category):
+		elements = [root, date, place, str(no), category]
+		path = './'
+
+		for element in elements:
+			path = path + '/' + element
+			if os.path.isdir(path) == False:
+				os.mkdir(path)
+	
+	def final_odds_exist(self, root, date, place, no, category):
+		path = '{}/{}/{}/{}/{}/9999999999.9.json'.format(root, date, place,no,category)
+		
+		return os.path.isfile(path)
+
+	def put_data(self, root, date, place, no, category, filename, data):
+		filename = 'tmp/{}/{}/{}/{}/{}.json'.format(date, place, no, category,filename)
+		with open(filename, 'w') as wfp:
+			json.dump(data, wfp, ensure_ascii = False)
+
 class parser_util:
 	def __init__(self):
 		self.func_patern = re.compile(r'\(.*\)')
@@ -18,8 +88,12 @@ class parser_util:
 		self.kaisuu_pattern = re.compile(r'[0-9]回')
 		self.nichisuu_pattern = re.compile(r'[0-9]日')
 
-		self.s3_client = boto3.client('s3')	
-		self.s3 = boto3.resource('s3')
+		if os.getenv('JRA_PRS_USE_LOCAL', '0') == '1':
+			print("Use Local Storage")
+			self.storage_controller = local_parser_storage()
+		else:
+			print("Use S3 Storage")
+			self.storage_controller = s3_parser_storage()
 		
 	def parse_func_params(self, str):
 		matched = self.func_patern.search(str)
@@ -90,55 +164,14 @@ class parser_util:
 		except:
 			raise
 
-	def local_folder_check(self, root, date, place, no, category):
-		elements = [root, date, place, str(no), category]
-		path = './'
+	def folder_check(self, root, date, place, no, category):
+		self.storage_controller.folder_check(root, date, place, no, category)
 
-		for element in elements:
-			path = path + '/' + element
-			if os.path.isdir(path) == False:
-				os.mkdir(path)
+	def final_odds_exist(self, root, date, place, no, category):
+		return self.storage_controller.final_odds_exist(root, date, place, no, category)
 
-	def does_final_odds_exist(self, root, date, place, no, category):
-		path = '{}/{}/{}/{}/{}/9999999999.9.json'.format(root, date, place,no,category)
-		
-		return os.path.isfile(path)
-
-	def s3_folder_check(self, root, date, place, no, category):
-		response = self.s3_client.list_objects(Bucket= BACKET_NAME)
-
-		exist = False
-		#folder_name = '{}{}'.format(key, '/')
-		folder_name = '{}/{}/{}/{}/{}/'.format(root, date, place,no,category)
-		for content in response['Contents']:
-			if content['Key'] == folder_name:
-				exist = True
-				break
-	
-		if exist == False:
-			bucket = self.s3.Bucket(BACKET_NAME)
-			bucket.put_object(Key=folder_name)
-		else:
-			pass
-	
-	def s3_file_check(self, key):
-		response = self.s3_client.list_objects(
-			Bucket= BACKET_NAME,
-			Prefix=key)
-		
-		if 'Contents' in response:
-			return True
-		else :
-			return False
-
-	def s3_final_odds_exist(self, root, date, place, no, category):
-		key = '{}/{}/{}/{}/{}/9999999999.9.json'.format(root, date, place,no,category)
-		return self.s3_file_check(key)
-
-	def s3_put_data(self, root, date, place, no, category, filename, data):
-		key = '{}/{}/{}/{}/{}/{}.json'.format(root, date, place,no,category, filename)
-		wobj = self.s3.Object(BACKET_NAME, key)
-		wobj.put(Body = json.dumps(data, ensure_ascii=False,))
+	def put_data(self, root, date, place, no, category, filename, data):
+		self.storage_controller.put_data(root, date, place, no, category, filename, data)
 
 def parser_util_convert_datestr(date_str):
     try:
