@@ -32,7 +32,7 @@ for kaisai in kaisai_list:
             json_data['win'] = []
             race_no = str(race['no']).zfill(2)
 
-            if 'win' in race :
+            if 'win' in race and pu.func_parser.s3_final_odds_exist('tmp', date, kaisai_place['kaisai'], race_no, 'win') == False:
                 #print('  -- {}/{}/{}/{}'.format(date, kaisai_place['kaisai'], race['no'],'win'))
 
                 pu.func_parser.s3_folder_check('tmp', date, kaisai_place['kaisai'], race_no, 'win')

@@ -121,6 +121,20 @@ class parser_util:
 		else:
 			pass
 	
+	def s3_file_check(self, key):
+		response = self.s3_client.list_objects(
+			Bucket= BACKET_NAME,
+			Prefix=key)
+		
+		if 'Contents' in response:
+			return True
+		else :
+			return False
+
+	def s3_final_odds_exist(self, root, date, place, no, category):
+		key = '{}/{}/{}/{}/{}/9999999999.9.json'.format(root, date, place,no,category)
+		return self.s3_file_check(key)
+
 	def s3_put_data(self, root, date, place, no, category, filename, data):
 		key = '{}/{}/{}/{}/{}/{}.json'.format(root, date, place,no,category, filename)
 		wobj = self.s3.Object(BACKET_NAME, key)
