@@ -84,7 +84,7 @@ class parser_util:
 	def __init__(self):
 		self.func_patern = re.compile(r'\(.*\)')
 		self.split_pattern = re.compile(r'[\(\)\']')
-		self.time_pattern = re.compile(r'[0-9]{2}:[0-9]{2}')
+		self.time_pattern = re.compile(r'[0-9]+:[0-9]{2}')
 		self.kaisuu_pattern = re.compile(r'[0-9]回')
 		self.nichisuu_pattern = re.compile(r'[0-9]日')
 
