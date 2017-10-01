@@ -18,9 +18,10 @@ class parser_odds(prp.parser_post):
                                 time_value = pu.func_parser.parse_time(value)
                                 full, stamp = pu.parser_util_convert_timestr_full_and_stamp(time_value)
                                 fixed = False
+                                break
                             except:
                                 print("ValueError : {}".format(value))
-                                pass
+                                odds_info['log'] = 'Value Error 0001'
                         else:
                             print(">> 最終オッズ")
                     else:
