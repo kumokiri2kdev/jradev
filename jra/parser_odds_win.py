@@ -93,4 +93,4 @@ class parser_odds_win(pro.parser_odds):
                         pass
                         #print(class_name)
 
-return uma_list
+        return uma_list
