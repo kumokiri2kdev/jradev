@@ -1,5 +1,6 @@
 import re
 from datetime import datetime
+from datetime import timedelta
 import boto3
 import json
 import os
@@ -189,7 +190,7 @@ def parser_util_convert_datestr(date_str):
 
 def parser_util_convert_timestr_full_and_stamp(time_str):
 	try:
-		today = datetime.now()
+		today = datetime.utcnow() + timedelta(hours=9)
 		converted = '{}/{}/{} {}'.format(today.year, today.month, today.day, time_str)
 		stamp = datetime.strptime(converted, '%Y/%m/%d %H:%M').timestamp()
 	except:
