@@ -52,7 +52,11 @@ def upload_win(json_data, date, kaisai, race_no, code):
         file_name = '9999999999.9'
     else:
         file_name = odds_info['timestamp']
-        json_data['category'] = odds_info['timestamp']
+
+    json_data['timestamp'] = float(file_name)
+
+    if 'log' in odds_info:
+        json_data['log'] = odds_info['log']
 
     pu.func_parser.put_data('tmp', date, kaisai_place['kaisai'], race_no, 'win', file_name, json_data)
 
