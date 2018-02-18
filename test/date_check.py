@@ -20,7 +20,7 @@ print(kaisai_list)
 for kaisai in kaisai_list:
     print("日付 : {}".format(kaisai['date']))
     converted = pu.parser_util_convert_datestr(kaisai['date'])
-    pu.func_parser.s3_folder_check(converted)
+    pu.func_parser.folder_check(converted)
 
     raw_data = {}
     raw_data['tag'] = 'マイデータ'
