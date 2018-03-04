@@ -198,4 +198,15 @@ def parser_util_convert_timestr_full_and_stamp(time_str):
 
 	return(converted, stamp)
 
+def parser_util_parse_kaisai(kaisai):
+    kaisai = kaisai.strip()
+    date = re.search(r'[0-9]{4}年[0-9]{1,2}月[0-9]{1,2}日', kaisai)
+    weekday = re.search(r'（[月火水木金土日]曜）', kaisai)
+    kaisuu = re.search(r'[0-9]*回', kaisai)
+    day = re.search(r'[0-9]*日$', kaisai)
+    place = re.search(r'(東京|中山|京都|阪神|札幌|函館|新潟|福島|中京|小倉)', kaisai)
+
+    return date[0], weekday[0].replace("（","").replace("）",""), int(kaisuu[0].replace("回","")), place[0], int(day[0].replace("日",""))
+
+
 func_parser = parser_util()

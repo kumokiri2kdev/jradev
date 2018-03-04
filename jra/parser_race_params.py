@@ -217,7 +217,7 @@ param_past["1710"]="CB"
 param_past["1711"]="99"
 param_past["1712"]="67"
 param_past["1801"]="78"
-param_past["1802"]="5F"
+param_past["1802"]="46"
 
 param_new = {}
 param_new["1803"]="2D"
@@ -231,13 +231,14 @@ param_new["1810"]="70"
 param_new["1811"]="3E"
 param_new["1812"]="0C"
 
+
 def parser_race_params_get_cname(yyyymm):
   key = '{0:04d}'.format( (yyyymm - 200000))
   if key in param_past :
-    ret = 'pw01skl00' + str(yyyymm) + '/' + param_past[key]
+    ret = 'pw01skl10' + str(yyyymm) + '/' + param_past[key]
     return ret
   elif key in param_new:
-    ret = 'pw01skl10'+ str(yyyymm) + '/' + param_new[key]
+    ret = 'pw01skl00'+ str(yyyymm) + '/' + param_new[key]
     return ret
 
   return None

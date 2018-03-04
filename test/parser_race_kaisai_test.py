@@ -2,12 +2,11 @@ import sys
 
 sys.path.append('../')
 
-from jra import parser_top as pr
 from jra import parser_race_kaisai as prrk
 
 use_network = True
 
-_parser = prrk.parser_race_kaisai('/JRADB/accessS.html','pw01srl10052018010720180217/97')
+_parser = prrk.parser_race_kaisai('/JRADB/accessS.html','pw01srl10062018020320180303/7B')
 
 if use_network:
     list = _parser.parse()
