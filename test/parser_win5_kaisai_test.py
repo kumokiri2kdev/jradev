@@ -6,13 +6,13 @@ from jra import parser_win5_kaisai as prwk
 
 use_network = True
 
-param = 'pw17hde01201104241/18'
+param = 'pw17hde01201105011/75'
 
 while True:
     _parser = prwk.parser_win5_kaisai('/JRADB/access5.html',param)
 
     if use_network:
-        param = _parser.parse()
+        kaisai = _parser.parse()
     else:
         args = sys.argv
 
@@ -22,7 +22,12 @@ while True:
 
         with open(args[1],'rb') as rfp:
             response_body = rfp.read().decode("'shift_jis'")
-            param = _parser.parse_html(response_body)
+            kaisai = _parser.parse_html(response_body)
+
 
     if param == None:
-        break;
+        break
+
+    print(kaisai)
+    break
+
