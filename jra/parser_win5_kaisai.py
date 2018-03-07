@@ -120,9 +120,15 @@ class parser_win5_kaisai(prp.parser_post):
         pass
 
     def parse_content(self, soup):
-        anchors = soup.find_all("a", attrs = {"href":"#"})
         ret = {}
 
+        date_str = soup.find("td", attrs={"class":"header3"})
+        if date_str != None:
+          date, weekday = pu.parser_util_parse_date(date_str.get_text())
+          ret['date']  = date
+          ret['weekday'] = weekday
+
+        anchors = soup.find_all("a", attrs = {"href":"#"})
         for anchor in anchors:
             text = anchor.get_text()
             if re.search(r"[0-9]{4}年[0-9]*月[0-9]*日.*→", text) != None:
