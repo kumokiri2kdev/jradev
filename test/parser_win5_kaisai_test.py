@@ -5,8 +5,8 @@ sys.path.append('../')
 from jra import parser_win5_kaisai as prwk
 
 use_network = True
-
-param = 'pw17hde01201105011/75'
+param = 'pw17hde01201104241/18'
+#param = 'pw17hde01201105011/75'
 
 while True:
     _parser = prwk.parser_win5_kaisai('/JRADB/access5.html',param)
@@ -29,5 +29,9 @@ while True:
         break
 
     print(kaisai)
-    break
+
+    if "next" in kaisai:
+        param = kaisai['next']
+    else:
+        break
 
