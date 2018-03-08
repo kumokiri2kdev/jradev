@@ -4,10 +4,19 @@ sys.path.append('../')
 
 from jra import parser_win5_kaisai as prwk
 
+import mysql.connector
+
 use_network = True
 param = 'pw17hde01201104241/18'
 #param = 'pw17hde01201105011/75'
-#param = 'pw17hde01201212091/CC'
+
+conn = mysql.connector.connect(
+  host='localhost',
+  port=3306,
+  user='root',
+  database='jra_try',
+)
+cur = conn.cursor()
 
 while True:
     _parser = prwk.parser_win5_kaisai('/JRADB/access5.html',param)
@@ -31,9 +40,17 @@ while True:
 
     print(kaisai)
 
+    cur.execute("INSERT INTO win5_list VALUES (%s, %s)",
+      [kaisai['date'].replace("年","/").replace("月","/").replace("日",""), kaisai['pay_back'] if 'pay_back' in kaisai else 0,]
+    )
+    conn.commit()
+
     if "next" in kaisai:
         param = kaisai['next']
     else:
         break
 
     #break
+
+conn.close()
+

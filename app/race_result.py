@@ -7,7 +7,7 @@ from jra import parser_race_params as prp
 from jra import parser_race_kaisai as prrk
 from jra import parser_race_race as prrr
 
-start = 201709
+start = 201001
 
 while start < 201804:
   param = prp.parser_race_params_get_cname(start)

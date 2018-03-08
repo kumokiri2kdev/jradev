@@ -13,7 +13,7 @@ def cache_contents(param):
   param = param.replace('/','-')
   with urllib.request.urlopen(request) as response:
     response_body = response.read()
-    with open("/Users/kumokiri2k/Documents/development/python/kumokiri2k/jradev/testdata/data/" + param,'wb') as wfp:
+    with open("/Users/seiichikataoka/Documents/development/jra/testdata/data/" + param,'wb') as wfp:
       wfp.write(response_body)
 
 

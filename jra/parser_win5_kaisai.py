@@ -58,6 +58,20 @@ def race_ninki_filter(element):
 def race_remaining_filter(element):
     return int(element.get_text().strip().replace("票","").replace(",",""))
 
+def race_winner_filter(element):
+    ret = {}
+    num = element.find("td",attrs={"class":"paddingoff"})
+    ret['number'] = int(num.get_text())
+    anchor = element.find_next_sibling().find("a")
+    params = pu.func_parser.parse_func_params(anchor['onclick'])
+    horse = {}
+    horse['param'] = params[1]
+    horse['name'] = anchor.get_text()
+
+    ret['horse'] = horse
+
+    return ret
+
 def parse_win5list_2(win5list, ret):
     trs = win5list.find_all("tr")
 
@@ -78,6 +92,11 @@ def parse_win5list_2(win5list, ret):
                 json_tag = "race"
                 filter_func = race_race_filter
                 siblings = th.find_next_siblings("th")
+            elif th_tag in "勝馬":
+                json_tag = "winner"
+                filter_func = race_winner_filter
+                siblings = th.find_next_siblings("td")
+                siblings = [siblings[0], siblings[2],siblings[4],siblings[6],siblings[8]]
             elif th_tag in "残り票数":
                 json_tag = "remaining"
                 filter_func = race_remaining_filter

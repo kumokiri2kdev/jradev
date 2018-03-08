@@ -4,6 +4,7 @@ from datetime import timedelta
 import boto3
 import json
 import os
+import urllib.request
 
 BACKET_NAME = 'jradatabucket'
 

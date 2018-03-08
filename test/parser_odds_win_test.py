@@ -46,4 +46,5 @@ for uma_data in uma_list:
     print(" {} {}".format(uma_data['stable']['name'], uma_data['sexage']))
     print("    url : {}".format(uma_data['stable']['url']))
     print("    param : {}".format(uma_data['stable']['param']))
-        
+
+print(odds_info)

@@ -9,7 +9,7 @@ use_network = True
 #param = "pw01sde1005201801070120180217/B4"
 #param = "pw01sde1005201801070220180217/69"
 #param = "pw01sde1005201801071120180217/06"
-param = "pw01sde1006201705071020171223/D6"
+param = "pw01sde1009201801041020180304/0A"
 
 _parser = prrr.parser_race_race('/JRADB/accessS.html', param)
 
