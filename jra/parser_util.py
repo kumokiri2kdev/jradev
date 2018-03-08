@@ -214,5 +214,20 @@ def parser_util_parse_kaisai(kaisai):
 
     return date[0], weekday[0].replace("（","").replace("）",""), int(kaisuu[0].replace("回","")), place[0], int(day[0].replace("日",""))
 
+def parser_util_cache_contents(url, param):
+
+  if ('JRA_DIR' in os.environ) == False:
+    print("Directory Not Found")
+    return
+
+  cname = "cname={}".format(param).encode('utf-8')
+  request = urllib.request.Request('http://www.jra.go.jp/JRADB/' + url, data=cname, method='POST')
+
+  param = param.replace('/','-')
+  with urllib.request.urlopen(request) as response:
+    response_body = response.read()
+    with open(os.environ['JRA_DIR'] + param,'wb') as wfp:
+      wfp.write(response_body)
+
 
 func_parser = parser_util()
