@@ -3,7 +3,6 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 
 HOST = 'localhost'
 PORT = 8080
-DATA_DIR = '../../testdata/data/'
 
 class CallbackServer(BaseHTTPRequestHandler):
     def construct_path_dict(self):
@@ -54,6 +53,11 @@ class CallbackServer(BaseHTTPRequestHandler):
            
             
 if __name__ == '__main__':
+    if ('JRA_DIR' in os.environ) == False:
+        print("Directory Not Found")
+        exit
+
+    DATA_DIR = os.environ['JRA_DIR'] 
     server_class = HTTPServer
     httpd = server_class((HOST, PORT), CallbackServer)
     httpd.serve_forever()
