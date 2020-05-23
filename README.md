@@ -8,4 +8,8 @@ Software libraries to utilize information on JRA Web site
 | `JRA_PRS_USE_LOCAL`     | 0 : Store data onto s3<br>1 : Store data into local storage    | Upload destination|
 
 
+## data
 
+### race result
+- 'grade' : Grade
+- 'weight' : '馬齢'
